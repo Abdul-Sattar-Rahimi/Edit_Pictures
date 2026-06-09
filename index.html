@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SattarEdith Pro v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&family=Lobster&family=Pacifico&family=Dancing+Script:wght@700&family=Roboto:wght@400;700&family=Playfair+Display:ital,wght@1,700&family=Bebas+Neue&family=Satisfy&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --bg:#07080d;--gl:rgba(255,255,255,.07);--gb:rgba(255,255,255,.11);
+  --ac:#7c5cfc;--ac2:#fc5cf7;--gw:rgba(124,92,252,.4);
+  --tx:#f0eeff;--tm:#8b87a8;--err:#fc5c7d;--ok:#5cfcb4;
+  --r:14px;--rs:8px;--sh:0 8px 40px rgba(0,0,0,.6);--tr:.18s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;
+  background-image:radial-gradient(ellipse at 10% 0%,rgba(124,92,252,.14) 0%,transparent 55%),
+  radial-gradient(ellipse at 90% 100%,rgba(252,92,247,.09) 0%,transparent 55%);}
+/* AUTH */
+#AO{position:fixed;inset:0;z-index:9999;background:rgba(7,8,13,.97);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center}
+#AB{width:420px;max-width:95vw;background:rgba(255,255,255,.05);border:1px solid var(--gb);border-radius:20px;padding:32px 28px;box-shadow:var(--sh)}
+.alogo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:3px;background:linear-gradient(135deg,var(--ac),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px}
+.asub{font-size:.8rem;color:var(--tm);text-align:center;margin-bottom:22px}
+.atabs{display:flex;gap:4px;background:rgba(0,0,0,.3);border-radius:10px;padding:4px;margin-bottom:18px}
+.atab{flex:1;padding:9px;text-align:center;border-radius:8px;font-family:inherit;font-size:.82rem;cursor:pointer;border:none;background:transparent;color:var(--tm);transition:all var(--tr)}
+.atab.on{background:var(--ac);color:#fff;font-weight:600}
+.af{display:none;flex-direction:column;gap:11px}
+.af.on{display:flex}
+.iw{position:relative}
+.iw .ic{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--tm);font-size:.82rem;pointer-events:none}
+.ai{width:100%;padding:10px 36px 10px 12px;background:rgba(255,255,255,.06);border:1px solid var(--gb);border-radius:var(--rs);color:var(--tx);font-family:inherit;font-size:.82rem;outline:none;transition:border-color var(--tr)}
+.ai:focus{border-color:var(--ac)}
+.ai.ltr{direction:ltr;text-align:left;padding-right:12px;padding-left:36px}
+.pt{position:absolute;left:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--tm);font-size:.82rem}
+.pt:hover{color:var(--tx)}
+.or{display:flex;gap:7px;align-items:center}
+.or .ai{flex:1}
+.ob{padding:10px 12px;border:1px solid var(--ac);background:transparent;color:var(--ac);border-radius:var(--rs);font-family:inherit;font-size:.75rem;cursor:pointer;white-space:nowrap;transition:all var(--tr)}
+.ob:hover{background:var(--ac);color:#fff}
+.ob:disabled{opacity:.4;cursor:not-allowed}
+.sb{height:3px;border-radius:2px;transition:all .3s;background:rgba(255,255,255,.1);margin-top:3px}
+.st2{font-size:.67rem;color:var(--tm);margin-top:2px}
+.abtn{padding:12px;border:none;border-radius:var(--rs);background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;transition:all var(--tr);margin-top:4px;box-shadow:0 4px 20px var(--gw)}
+.abtn:hover{opacity:.9;transform:translateY(-1px)}
+.aerr{font-size:.76rem;color:var(--err);text-align:center;min-height:16px}
+.aok{font-size:.76rem;color:var(--ok);text-align:center;min-height:16px}
+.otmr{font-size:.67rem;color:var(--tm);text-align:center;margin-top:3px}
+/* HEADER */
+#HD{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;background:rgba(7,8,13,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--gb);position:sticky;top:0;z-index:100}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;background:linear-gradient(135deg,var(--ac),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hinfo{font-size:.7rem;color:var(--tm);text-align:center}
+#finf{font-size:.65rem;color:var(--tm);margin-top:1px}
+.hact{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.ubdg{display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:20px;background:rgba(124,92,252,.15);border:1px solid rgba(124,92,252,.3);font-size:.73rem;cursor:pointer}
+.uav{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:var(--rs);border:1px solid var(--gb);background:var(--gl);color:var(--tx);font-family:inherit;font-size:.76rem;cursor:pointer;transition:all var(--tr);white-space:nowrap;backdrop-filter:blur(8px)}
+.btn:hover{background:rgba(255,255,255,.12);transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.btn:active{transform:translateY(0)}
+.bac{background:linear-gradient(135deg,var(--ac),var(--ac2));border-color:transparent;font-weight:600;box-shadow:0 4px 18px var(--gw)}
+.bac:hover{box-shadow:0 6px 26px var(--gw)}
+.bd{border-color:rgba(252,92,125,.3)}.bd:hover{background:rgba(252,92,125,.15)}
+.bsm{padding:5px 9px;font-size:.7rem}.bic{padding:6px 9px}
+.btn.on{background:rgba(124,92,252,.25);border-color:var(--ac)}
+/* SAVE DROPDOWN */
+.ddw{position:relative;display:inline-flex}
+.ddm{position:absolute;top:calc(100% + 5px);left:0;background:rgba(10,11,18,.98);border:1px solid var(--gb);border-radius:var(--rs);padding:5px;display:none;flex-direction:column;gap:2px;min-width:195px;z-index:600;box-shadow:var(--sh)}
+.ddm.on{display:flex}
+.ddi{padding:7px 12px;border-radius:6px;font-size:.76rem;cursor:pointer;color:var(--tm);font-family:inherit;text-align:right;transition:background var(--tr)}
+.ddi:hover{background:rgba(124,92,252,.2);color:var(--tx)}
+/* LAYOUT */
+#LY{display:flex;height:calc(100vh - 53px);overflow:hidden}
+/* LEFT PANEL */
+#LP{width:272px;min-width:248px;background:rgba(7,8,13,.8);backdrop-filter:blur(20px);border-left:1px solid var(--gb);display:flex;flex-direction:column;overflow:hidden}
+#TB{display:flex;flex-wrap:wrap;gap:2px;padding:5px;background:rgba(0,0,0,.36);border-bottom:1px solid var(--gb)}
+.tb{flex:1 1 auto;min-width:30px;padding:5px 2px;border:none;background:transparent;color:var(--tm);font-size:.61rem;cursor:pointer;border-radius:6px;transition:all var(--tr);display:flex;flex-direction:column;align-items:center;gap:2px;font-family:inherit}
+.tb i{font-size:.88rem}.tb:hover{color:var(--tx);background:var(--gl)}.tb.on{color:var(--ac);background:rgba(124,92,252,.15)}
+#PC{flex:1;overflow-y:auto;padding:10px;scrollbar-width:thin;scrollbar-color:var(--ac) transparent}
+#PC::-webkit-scrollbar{width:3px}#PC::-webkit-scrollbar-thumb{background:var(--ac);border-radius:2px}
+.ps{display:none}.ps.on{display:block}
+.st{font-size:.65rem;font-weight:600;color:var(--tm);text-transform:uppercase;letter-spacing:1.4px;margin:10px 0 5px}.st:first-child{margin-top:0}
+/* FORM */
+label{font-size:.72rem;color:var(--tm);display:block;margin-bottom:3px}
+input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:rgba(255,255,255,.1);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--ac);box-shadow:0 0 7px var(--gw)}
+input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--ac);border:none}
+.rr{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.rr label{min-width:56px;margin:0}.rv{font-size:.68rem;color:var(--ac);min-width:30px;text-align:center}
+input[type=color]{width:34px;height:26px;border:1px solid var(--gb);border-radius:var(--rs);background:none;cursor:pointer;padding:2px}
+input[type=text],select{width:100%;padding:7px 10px;background:rgba(255,255,255,.05);border:1px solid var(--gb);border-radius:var(--rs);color:var(--tx);font-family:inherit;font-size:.76rem;outline:none;transition:border-color var(--tr)}
+input[type=text]:focus,select:focus{border-color:var(--ac)}
+select option{background:#1a1b25}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:6px}
+.r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:6px}
+.mb8{margin-bottom:8px}
+/* FILTER GRID */
+.fg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:7px}
+.fc{border:1px solid var(--gb);border-radius:var(--rs);padding:6px 3px;cursor:pointer;text-align:center;font-size:.61rem;color:var(--tm);background:var(--gl);transition:all var(--tr)}
+.fc:hover{border-color:var(--ac);color:var(--tx)}.fc.on{border-color:var(--ac);background:rgba(124,92,252,.2);color:var(--ac)}
+/* FRAME */
+.frg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:7px}
+.frc{border:1px solid var(--gb);border-radius:var(--rs);padding:4px;cursor:pointer;text-align:center;font-size:.6rem;color:var(--tm);background:var(--gl);transition:all var(--tr)}
+.frc:hover{border-color:var(--ac)}.frc.on{border-color:var(--ac);background:rgba(124,92,252,.2);color:var(--ac)}
+.fpv{width:42px;height:31px;margin:0 auto 3px;display:block}
+/* TEXT LAYER */
+.tli{display:flex;align-items:center;justify-content:space-between;padding:5px 7px;border-radius:var(--rs);border:1px solid var(--gb);background:var(--gl);margin-bottom:4px;font-size:.7rem;cursor:pointer;transition:all var(--tr)}
+.tli:hover,.tli.on{border-color:var(--ac);background:rgba(124,92,252,.15)}
+/* PIXEL ART */
+#PGC{display:flex;justify-content:center;overflow:auto;max-height:250px;border-radius:var(--rs);border:1px solid var(--gb);background:#111;margin-bottom:6px}
+#PXC{display:block;image-rendering:pixelated;cursor:crosshair}
+.pal{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px}
+.psw{width:19px;height:19px;border-radius:3px;cursor:pointer;border:2px solid transparent;transition:transform var(--tr)}
+.psw:hover{transform:scale(1.25)}.psw.on{border-color:#fff}
+/* CANVAS */
+#CA{flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:radial-gradient(circle at center,rgba(124,92,252,.04) 0%,transparent 70%)}
+#DZ{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;width:580px;max-width:94%;aspect-ratio:4/3;border:2px dashed var(--gb);border-radius:20px;cursor:pointer;transition:all var(--tr);background:var(--gl);backdrop-filter:blur(10px)}
+#DZ.dov{border-color:var(--ac);background:rgba(124,92,252,.1)}
+#DZ-ico{font-size:2.8rem;color:var(--ac)}
+#DZ p{color:var(--tm);font-size:.86rem;text-align:center}
+#CW{position:relative;display:none;box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 0 1px var(--gb);border-radius:4px}
+#MC{display:block;max-width:100%;border-radius:4px}
+#DC{position:absolute;top:0;left:0;border-radius:4px;cursor:crosshair;pointer-events:none}
+#DC.on{pointer-events:all}
+.tov{position:absolute;cursor:move;user-select:none;line-height:1.2;white-space:nowrap}
+#CO{position:absolute;top:0;left:0;width:100%;height:100%;display:none;cursor:crosshair}
+#CS{position:absolute;border:2px solid var(--ac);box-shadow:0 0 0 9999px rgba(0,0,0,.5);display:none}
+/* BG Progress */
+#BGP{display:none;position:absolute;inset:0;z-index:200;background:rgba(7,8,13,.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;flex-direction:column;gap:12px;border-radius:4px}
+#BGP.on{display:flex}
+.spin{width:42px;height:42px;border:3px solid rgba(124,92,252,.3);border-top-color:var(--ac);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+/* RIGHT PANEL */
+#RP{width:52px;background:rgba(7,8,13,.8);backdrop-filter:blur(20px);border-right:1px solid var(--gb);display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px}
+.ib{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:var(--rs);border:1px solid var(--gb);background:var(--gl);color:var(--tm);cursor:pointer;transition:all var(--tr);font-size:.87rem;position:relative}
+.ib:hover{color:var(--tx);background:rgba(255,255,255,.1)}
+.ib .tip{position:absolute;left:-112px;background:#1a1b25;border:1px solid var(--gb);color:var(--tx);font-size:.65rem;padding:4px 8px;border-radius:4px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity var(--tr);font-family:'Vazirmatn',sans-serif}
+.ib:hover .tip{opacity:1}
+.dvd{width:26px;height:1px;background:var(--gb);margin:2px 0}
+/* MODALS */
+.mo{position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,.72);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center}
+.mo.on{display:flex}
+.mb{width:570px;max-width:95vw;max-height:88vh;overflow-y:auto;background:rgba(10,11,18,.97);border:1px solid var(--gb);border-radius:20px;padding:26px;box-shadow:var(--sh)}
+.mb::-webkit-scrollbar{width:3px}.mb::-webkit-scrollbar-thumb{background:var(--ac);border-radius:2px}
+.mhd{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.mt{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;background:linear-gradient(135deg,var(--ac),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.mcl{background:none;border:none;color:var(--tm);font-size:1.1rem;cursor:pointer;padding:4px;transition:color var(--tr)}.mcl:hover{color:var(--tx)}
+.ms{margin-bottom:18px}.ms h3{font-size:.87rem;color:var(--ac);margin-bottom:7px;display:flex;align-items:center;gap:7px}
+.ms p,.ms li{font-size:.8rem;color:var(--tm);line-height:1.7}.ms ul{padding-right:14px}.ms li{margin-bottom:3px}
+.hgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hc{background:var(--gl);border:1px solid var(--gb);border-radius:var(--rs);padding:11px}
+.hc h4{font-size:.77rem;color:var(--tx);margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.hc p{font-size:.72rem;color:var(--tm)}
+.aav{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 11px}
+.socl{display:flex;gap:9px;justify-content:center;margin-top:11px}
+.sl{display:flex;align-items:center;gap:6px;padding:7px 13px;border:1px solid var(--gb);border-radius:20px;color:var(--tm);text-decoration:none;font-size:.75rem;transition:all var(--tr)}
+.sl:hover{border-color:var(--ac);color:var(--ac)}
+/* TOAST */
+#TOAST{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:rgba(10,11,18,.97);backdrop-filter:blur(20px);border:1px solid var(--gb);color:var(--tx);padding:9px 18px;border-radius:30px;font-size:.78rem;transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:9998;box-shadow:var(--sh);pointer-events:none}
+#TOAST.on{transform:translateX(-50%) translateY(0)}
+/* RESPONSIVE */
+@media(max-width:768px){#LP{width:205px;min-width:188px}#RP{width:42px}.ib{width:34px;height:34px;font-size:.78rem}}
+@media(max-width:510px){#LY{flex-direction:column}#LP{width:100%;height:195px;border-left:none;border-bottom:1px solid var(--gb);flex-direction:row}#RP{width:100%;height:44px;flex-direction:row;border-right:none;border-top:1px solid var(--gb);padding:5px 10px}}
+</style>
+</head>
+<body>
+
+<!-- AUTH OVERLAY -->
+<div id="AO">
+<div id="AB">
+  <div class="alogo">SattarEdith Pro</div>
+  <div class="asub">ویرایشگر حرفه‌ای تصویر</div>
+  <div class="atabs">
+    <button class="atab on" onclick="swAT('login')">ورود</button>
+    <button class="atab" onclick="swAT('reg')">ثبت‌نام</button>
+  </div>
+
+  <!-- LOGIN FORM -->
+  <form class="af on" id="LF" onsubmit="return false">
+    <div class="iw"><i class="fas fa-user ic"></i><input class="ai" id="lid" placeholder="ایمیل یا نام کاربری"></div>
+    <div class="iw"><i class="fas fa-lock ic"></i><input class="ai ltr" id="lps" type="password" placeholder="رمز عبور"><span class="pt" onclick="tp('lps',this)"><i class="fas fa-eye"></i></span></div>
+    <div class="aerr" id="lerr"></div>
+    <button class="abtn" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> ورود به حساب</button>
+  </form>
+
+  <!-- REGISTER FORM -->
+  <form class="af" id="RF" onsubmit="return false">
+    <div class="iw"><i class="fas fa-user ic"></i><input class="ai" id="run" placeholder="نام کاربری (a-z 0-9 _)"></div>
+    <div class="iw"><i class="fas fa-envelope ic"></i><input class="ai ltr" id="rem" type="email" placeholder="آدرس ایمیل"></div>
+    <div>
+      <div class="or">
+        <div class="iw" style="flex:1"><i class="fas fa-mobile-alt ic"></i><input class="ai ltr" id="rph" placeholder="09xxxxxxxxx" maxlength="11"></div>
+        <button class="ob" onclick="sendOTP()" id="otpB">ارسال کد</button>
+      </div>
+      <input class="ai ltr" id="rotp" placeholder="کد تایید ۶ رقمی" maxlength="6" style="margin-top:5px;letter-spacing:4px;text-align:center" disabled>
+      <div class="otmr" id="otmr"></div>
+    </div>
+    <div class="iw"><i class="fas fa-lock ic"></i><input class="ai ltr" id="rp1" type="password" placeholder="رمز عبور (حداقل ۸ کاراکتر)" oninput="chkS(this.value)"><span class="pt" onclick="tp('rp1',this)"><i class="fas fa-eye"></i></span></div>
+    <div><div class="sb" id="sbar"></div><div class="st2" id="stxt"></div></div>
+    <div class="iw"><i class="fas fa-lock ic"></i><input class="ai ltr" id="rp2" type="password" placeholder="تکرار رمز عبور"><span class="pt" onclick="tp('rp2',this)"><i class="fas fa-eye"></i></span></div>
+    <div class="aerr" id="rerr"></div>
+    <button class="abtn" onclick="doReg()"><i class="fas fa-user-plus"></i> ایجاد حساب کاربری</button>
+  </form>
+</div>
+</div>
+
+<!-- HEADER -->
+<header id="HD">
+  <div class="logo">SattarEdith Pro</div>
+  <div class="hinfo"><div>ویرایشگر حرفه‌ای تصویر</div><div id="finf">هنوز تصویری بارگذاری نشده</div></div>
+  <div class="hact">
+    <button class="btn" onclick="document.getElementById('FI').click()"><i class="fas fa-upload"></i> بارگذاری</button>
+    <button class="btn bsm" id="BReset" style="display:none" onclick="resetImg()"><i class="fas fa-undo-alt"></i> ریست</button>
+    <div class="ddw" id="SDW" style="display:none">
+      <button class="btn bac" onclick="tDD()"><i class="fas fa-download"></i> ذخیره <i class="fas fa-chevron-down" style="font-size:.55rem"></i></button>
+      <div class="ddm" id="DDM">
+        <div class="ddi" onclick="saveI('png')"><i class="fas fa-file-image"></i> PNG – بدون افت کیفیت</div>
+        <div class="ddi" onclick="saveI('jpeg','hi')"><i class="fas fa-file-image"></i> JPEG – کیفیت بالا (95%)</div>
+        <div class="ddi" onclick="saveI('jpeg','lo')"><i class="fas fa-file-image"></i> JPEG – حجم کم (50%)</div>
+        <div class="ddi" onclick="saveI('webp','hi')"><i class="fas fa-file-image"></i> WebP – مدرن (95%)</div>
+        <div class="ddi" onclick="saveI('webp','lo')"><i class="fas fa-file-image"></i> WebP – حجم کم (50%)</div>
+      </div>
+    </div>
+    <div class="ubdg" id="UBG" style="display:none" onclick="usrM()">
+      <div class="uav" id="UAV"><i class="fas fa-user" style="font-size:.65rem"></i></div>
+      <span id="UNAME">کاربر</span>
+    </div>
+    <button class="btn bsm" onclick="openM('ABM')"><i class="fas fa-info-circle"></i></button>
+    <button class="btn bsm" onclick="openM('HLM')"><i class="fas fa-question-circle"></i></button>
+    <input type="file" id="FI" accept="image/*" style="display:none">
+  </div>
+</header>
+
+<!-- LAYOUT -->
+<div id="LY">
+<!-- LEFT PANEL -->
+<aside id="LP">
+  <div id="TB">
+    <button class="tb on" onclick="swT('fil',this)"><i class="fas fa-magic"></i>فیلتر</button>
+    <button class="tb" onclick="swT('txt',this)"><i class="fas fa-font"></i>متن</button>
+    <button class="tb" onclick="swT('frm',this)"><i class="fas fa-border-style"></i>قاب</button>
+    <button class="tb" onclick="swT('drw',this)"><i class="fas fa-paint-brush"></i>نقاشی</button>
+    <button class="tb" onclick="swT('pix',this)"><i class="fas fa-th"></i>پیکسل</button>
+    <button class="tb" onclick="swT('trn',this)"><i class="fas fa-crop-alt"></i>تبدیل</button>
+    <button class="tb" onclick="swT('bgr',this)"><i class="fas fa-eraser"></i>پس‌زمینه</button>
+    <button class="tb" onclick="swT('stk',this)"><i class="fas fa-smile"></i>استیکر</button>
+  </div>
+  <div id="PC">
+    <!-- FILTERS TAB -->
+    <div class="ps on" id="tab-fil">
+      <div class="st">فیلترهای کلاسیک</div>
+      <div class="fg">
+        <div class="fc on" onclick="apF('none',this)">Normal</div>
+        <div class="fc" onclick="apF('grayscale',this)">Grayscale</div>
+        <div class="fc" onclick="apF('sepia',this)">Sepia</div>
+        <div class="fc" onclick="apF('invert',this)">Invert</div>
+        <div class="fc" onclick="apF('vintage',this)">Vintage</div>
+        <div class="fc" onclick="apF('bright',this)">Bright+</div>
+      </div>
+      <div class="st">فیلترهای مدرن</div>
+      <div class="fg">
+        <div class="fc" onclick="apF('clarendon',this)">Clarendon</div>
+        <div class="fc" onclick="apF('gingham',this)">Gingham</div>
+        <div class="fc" onclick="apF('moon',this)">Moon</div>
+        <div class="fc" onclick="apF('lark',this)">Lark</div>
+        <div class="fc" onclick="apF('reyes',this)">Reyes</div>
+        <div class="fc" onclick="apF('juno',this)">Juno</div>
+      </div>
+      <div class="st">فیلترهای قدیمی‌کننده</div>
+      <div class="fg">
+        <div class="fc" onclick="apF('aged',this)">Aged</div>
+        <div class="fc" onclick="apF('faded',this)">Faded</div>
+        <div class="fc" onclick="apF('daguerro',this)">1800s</div>
+        <div class="fc" onclick="apF('retro70',this)">Retro 70s</div>
+        <div class="fc" onclick="apF('polaroid',this)">Polaroid</div>
+        <div class="fc" onclick="apF('worn',this)">Worn</div>
+      </div>
+      <div class="st">فیلترهای آب‌وهوایی</div>
+      <div class="fg">
+        <div class="fc" onclick="apF('sunny',this)">☀️ Sunny</div>
+        <div class="fc" onclick="apF('cloudy',this)">☁️ Cloudy</div>
+        <div class="fc" onclick="apF('rainy',this)">🌧️ Rainy</div>
+        <div class="fc" onclick="apF('foggy',this)">🌫️ Foggy</div>
+        <div class="fc" onclick="apF('snowy',this)">❄️ Snowy</div>
+        <div class="fc" onclick="apF('dusk',this)">🌆 Dusk</div>
+      </div>
+      <div class="st">تنظیمات دقیق</div>
+      <div class="rr"><label>روشنایی</label><input type="range" id="sB" min="-100" max="100" value="0" oninput="updA()"><span class="rv" id="vB">0</span></div>
+      <div class="rr"><label>کنتراست</label><input type="range" id="sC" min="-100" max="100" value="0" oninput="updA()"><span class="rv" id="vC">0</span></div>
+      <div class="rr"><label>اشباع</label><input type="range" id="sS" min="-100" max="100" value="0" oninput="updA()"><span class="rv" id="vS">0</span></div>
+      <div class="rr"><label>بلور</label><input type="range" id="sBl" min="0" max="20" value="0" oninput="updA()"><span class="rv" id="vBl">0</span></div>
+      <button class="btn bsm" onclick="autoE()" style="width:100%;margin-top:4px"><i class="fas fa-wand-magic-sparkles"></i> تنظیم خودکار</button>
+    </div>
+    <!-- TEXT TAB -->
+    <div class="ps" id="tab-txt">
+      <div class="st">افزودن متن</div>
+      <div class="mb8"><label>متن</label><input type="text" id="TI" value="متن نمونه"></div>
+      <div class="mb8"><label>فونت</label>
+        <select id="TF">
+          <option value="Vazirmatn">وزیرمتن (فارسی)</option><option value="Roboto">Roboto</option>
+          <option value="Lobster">Lobster</option><option value="Pacifico">Pacifico</option>
+          <option value="Dancing Script">Dancing Script</option><option value="Playfair Display">Playfair Display</option>
+          <option value="Bebas Neue">Bebas Neue</option><option value="Satisfy">Satisfy</option>
+        </select>
+      </div>
+      <div class="r2 mb8">
+        <div><label>رنگ</label><input type="color" id="TC" value="#ffffff"></div>
+        <div><label>سایز</label><input type="range" id="TS" min="12" max="120" value="36"></div>
+      </div>
+      <div class="r2 mb8">
+        <button class="btn bsm" id="BBold" onclick="tBold()"><i class="fas fa-bold"></i> پررنگ</button>
+        <button class="btn bsm" id="BItal" onclick="tItal()"><i class="fas fa-italic"></i> کج</button>
+      </div>
+      <div class="rr mb8"><label>چرخش</label><input type="range" id="TR" min="0" max="360" value="0" oninput="document.getElementById('VTR').textContent=this.value+'°';updST()"><span class="rv" id="VTR">0°</span></div>
+      <div class="rr mb8"><label>شفافیت</label><input type="range" id="TOP" min="10" max="100" value="100" oninput="document.getElementById('VTOP').textContent=this.value+'%';updST()"><span class="rv" id="VTOP">100%</span></div>
+      <button class="btn bac" onclick="addTxt()" style="width:100%;margin-bottom:7px"><i class="fas fa-plus"></i> افزودن به عکس</button>
+      <div class="st">لایه‌های متن</div>
+      <div id="TLL"></div>
+      <button class="btn bsm bd" onclick="rmST()" style="width:100%;margin-top:4px"><i class="fas fa-trash"></i> حذف انتخابی</button>
+    </div>
+    <!-- FRAME TAB -->
+    <div class="ps" id="tab-frm">
+      <div class="st">قاب محو (Vignette)</div>
+      <div class="mb8"><label>رنگ قاب محو</label><input type="color" id="VC" value="#000000" style="width:100%;height:30px"></div>
+      <div class="rr"><label>شدت</label><input type="range" id="VI" min="0" max="100" value="0" oninput="document.getElementById('VVI').textContent=this.value+'%'"><span class="rv" id="VVI">0%</span></div>
+      <div class="rr"><label>اندازه</label><input type="range" id="VSZ" min="10" max="90" value="50" oninput="document.getElementById('VVSZ').textContent=this.value+'%'"><span class="rv" id="VVSZ">50%</span></div>
+      <button class="btn bac mb8" onclick="apVig()" style="width:100%"><i class="fas fa-circle-half-stroke"></i> اعمال قاب محو</button>
+      <div class="st">قاب معمولی</div>
+      <div class="frg">
+        <div class="frc on" onclick="selFR('solid',this)"><canvas class="fpv" id="fp-solid"></canvas>ساده</div>
+        <div class="frc" onclick="selFR('double',this)"><canvas class="fpv" id="fp-double"></canvas>دوتایی</div>
+        <div class="frc" onclick="selFR('shadow',this)"><canvas class="fpv" id="fp-shadow"></canvas>سایه‌دار</div>
+        <div class="frc" onclick="selFR('rounded',this)"><canvas class="fpv" id="fp-rounded"></canvas>گرد</div>
+        <div class="frc" onclick="selFR('vintage',this)"><canvas class="fpv" id="fp-vintage"></canvas>قدیمی</div>
+        <div class="frc" onclick="selFR('metallic',this)"><canvas class="fpv" id="fp-metallic"></canvas>فلزی</div>
+      </div>
+      <div class="rr"><label>ضخامت</label><input type="range" id="FRS" min="2" max="60" value="16" oninput="updFP()"><span class="rv" id="VFRS">16</span></div>
+      <div class="mb8"><label>رنگ قاب</label><input type="color" id="FRC" value="#ffffff" style="width:100%;height:30px" oninput="updFP()"></div>
+      <button class="btn bac" onclick="apFR()" style="width:100%"><i class="fas fa-check"></i> اعمال قاب</button>
+    </div>
+    <!-- DRAW TAB -->
+    <div class="ps" id="tab-drw">
+      <div class="st">ابزار نقاشی</div>
+      <button class="btn bac" id="DTB" onclick="togD()" style="width:100%;margin-bottom:7px"><i class="fas fa-paint-brush"></i> فعال کردن</button>
+      <div class="mb8"><label>نوع قلمو</label>
+        <select id="BT"><option value="round">گرد</option><option value="square">مربعی</option><option value="spray">اسپری</option><option value="dashed">خط چین</option></select>
+      </div>
+      <div class="r2 mb8">
+        <div><label>رنگ</label><input type="color" id="DC2" value="#ff0080"></div>
+        <div><label>پاک‌کن</label><button class="btn bsm" id="ERB" onclick="togER()" style="width:100%;margin-top:4px"><i class="fas fa-eraser"></i></button></div>
+      </div>
+      <div class="rr"><label>ضخامت</label><input type="range" id="BS" min="1" max="50" value="8" oninput="document.getElementById('VBS').textContent=this.value"><span class="rv" id="VBS">8</span></div>
+      <div class="rr"><label>شفافیت</label><input type="range" id="BO" min="10" max="100" value="100" oninput="document.getElementById('VBO').textContent=this.value+'%'"><span class="rv" id="VBO">100%</span></div>
+      <button class="btn bsm bd" onclick="clrDraw()" style="width:100%;margin-top:4px"><i class="fas fa-trash"></i> پاک کردن</button>
+      <button class="btn bsm" onclick="mergeDraw()" style="width:100%;margin-top:4px"><i class="fas fa-layer-group"></i> ادغام با عکس</button>
+    </div>
+    <!-- PIXEL TAB -->
+    <div class="ps" id="tab-pix">
+      <div class="st">پیکسل آرت</div>
+      <div class="r2 mb8"><button class="btn bsm" onclick="setPXS(16)">گرید ۱۶×۱۶</button><button class="btn bsm" onclick="setPXS(32)">گرید ۳۲×۳۲</button></div>
+      <div id="PGC"><canvas id="PXC" width="256" height="256"></canvas></div>
+      <div class="st">پالت</div>
+      <div class="pal" id="PALR"></div>
+      <div class="r2 mb8">
+        <div><label>رنگ</label><input type="color" id="PXCL" value="#7c5cfc" style="width:100%;height:28px" oninput="selPC(this.value)"></div>
+        <div><label>ابزار</label><select id="PXT"><option value="draw">قلم</option><option value="bucket">سطل</option><option value="eraser">پاک‌کن</option></select></div>
+      </div>
+      <div class="r3">
+        <button class="btn bsm" onclick="clrPX()"><i class="fas fa-trash"></i></button>
+        <button class="btn bsm" onclick="savePX()"><i class="fas fa-download"></i></button>
+        <button class="btn bsm bac" onclick="addPXtoImg()"><i class="fas fa-plus"></i></button>
+      </div>
+    </div>
+    <!-- TRANSFORM TAB -->
+    <div class="ps" id="tab-trn">
+      <div class="st">برش (Crop)</div>
+      <button class="btn" id="CRPB" onclick="togCrop()" style="width:100%;margin-bottom:4px"><i class="fas fa-crop-alt"></i> انتخاب ناحیه</button>
+      <button class="btn bac" id="ACRPB" onclick="applyCrop()" style="width:100%;margin-bottom:7px;display:none"><i class="fas fa-check"></i> اعمال برش</button>
+      <div class="st">چرخش و آینه</div>
+      <div class="r2 mb8">
+        <button class="btn bsm" onclick="rotI(-90)"><i class="fas fa-undo"></i> ۹۰° چپ</button>
+        <button class="btn bsm" onclick="rotI(90)"><i class="fas fa-redo"></i> ۹۰° راست</button>
+      </div>
+      <div class="r2 mb8">
+        <button class="btn bsm" onclick="flipI('h')"><i class="fas fa-arrows-alt-h"></i> افقی</button>
+        <button class="btn bsm" onclick="flipI('v')"><i class="fas fa-arrows-alt-v"></i> عمودی</button>
+      </div>
+      <div class="st">چرخش آزاد</div>
+      <div class="rr mb8"><label>زاویه</label><input type="range" id="SLR" min="-180" max="180" value="0" oninput="freeR(this.value)"><span class="rv" id="VRR">0°</span></div>
+      <button class="btn bsm" onclick="document.getElementById('SLR').value=0;freeR(0)" style="width:100%">ریست</button>
+    </div>
+    <!-- BG REMOVE TAB -->
+    <div class="ps" id="tab-bgr">
+      <div class="st">حذف پس‌زمینه</div>
+      <p style="font-size:.72rem;color:var(--tm);margin-bottom:9px;line-height:1.6">پردازش محلی بدون API — خروجی PNG شفاف</p>
+      <div class="mb8"><label>روش حذف</label>
+        <select id="BGM" onchange="bgMch()">
+          <option value="color">رنگ (Color Key) – بهترین برای پس‌زمینه یک‌رنگ</option>
+          <option value="threshold">آستانه روشنایی</option>
+          <option value="edge">لبه‌محور</option>
+        </select>
+      </div>
+      <div id="BGCO">
+        <div class="mb8"><label>رنگ پس‌زمینه هدف</label><input type="color" id="BGT" value="#ffffff" style="width:100%;height:30px"></div>
+        <div class="rr"><label>تلرانس</label><input type="range" id="BGTO" min="5" max="130" value="40" oninput="document.getElementById('VBGT').textContent=this.value"><span class="rv" id="VBGT">40</span></div>
+        <div class="rr"><label>نرم‌کردن</label><input type="range" id="BGF" min="0" max="12" value="2" oninput="document.getElementById('VBGF').textContent=this.value"><span class="rv" id="VBGF">2</span></div>
+      </div>
+      <div id="BGTH" style="display:none">
+        <div class="rr"><label>آستانه</label><input type="range" id="BGTHV" min="10" max="240" value="128" oninput="document.getElementById('VBGTH').textContent=this.value"><span class="rv" id="VBGTH">128</span></div>
+      </div>
+      <button class="btn bac" onclick="removeBG()" style="width:100%;margin-bottom:5px"><i class="fas fa-magic"></i> حذف پس‌زمینه</button>
+      <button class="btn bsm" onclick="saveI('png')" style="width:100%"><i class="fas fa-download"></i> ذخیره PNG شفاف</button>
+      <p style="font-size:.65rem;color:var(--tm);margin-top:7px;line-height:1.5">💡 برای پس‌زمینه سفید یا یک‌رنگ، روش «رنگ» با تلرانس 30-50 بهترین نتیجه را دارد</p>
+    </div>
+    <!-- STICKERS TAB -->
+    <div class="ps" id="tab-stk">
+      <div class="st">استیکرها</div>
+      <div class="pal" id="STKR" style="gap:7px"></div>
+      <p style="font-size:.68rem;color:var(--tm);margin-top:7px">پس از افزودن با موس جا‌به‌جا کنید.</p>
+    </div>
+  </div>
+</aside>
+
+<!-- CANVAS AREA -->
+<main id="CA">
+  <div id="DZ" onclick="document.getElementById('FI').click()">
+    <i class="fas fa-cloud-upload-alt" id="DZ-ico"></i>
+    <p>عکس را اینجا رها کنید<br><span style="font-size:.73rem;opacity:.6">یا کلیک کنید</span></p>
+  </div>
+  <div id="CW">
+    <canvas id="MC"></canvas>
+    <canvas id="DC"></canvas>
+    <div id="CO"><div id="CS"></div></div>
+    <div id="BGP"><div class="spin"></div><span style="font-size:.8rem;color:var(--tm)">در حال پردازش…</span></div>
+  </div>
+</main>
+
+<!-- RIGHT PANEL -->
+<aside id="RP">
+  <div class="ib" onclick="doUndo()"><i class="fas fa-rotate-left"></i><span class="tip">واگرد Ctrl+Z</span></div>
+  <div class="ib" onclick="doRedo()"><i class="fas fa-rotate-right"></i><span class="tip">انجام مجدد Ctrl+Y</span></div>
+  <div class="dvd"></div>
+  <div class="ib" onclick="zI()"><i class="fas fa-magnifying-glass-plus"></i><span class="tip">بزرگ‌نمایی</span></div>
+  <div class="ib" onclick="zO()"><i class="fas fa-magnifying-glass-minus"></i><span class="tip">کوچک‌نمایی</span></div>
+  <div class="ib" onclick="zR()"><i class="fas fa-expand"></i><span class="tip">اندازه واقعی</span></div>
+  <div class="dvd"></div>
+  <div class="ib" onclick="cpyC()"><i class="fas fa-copy"></i><span class="tip">کپی</span></div>
+</aside>
+</div>
+
+<!-- ABOUT MODAL -->
+<div class="mo" id="ABM">
+<div class="mb">
+  <div class="mhd"><span class="mt">درباره سازنده</span><button class="mcl" onclick="closeM('ABM')"><i class="fas fa-times"></i></button></div>
+  <div style="text-align:center;margin-bottom:18px">
+    <div class="aav">🎨</div>
+    <h2 style="font-size:1.1rem;margin-bottom:3px">SattarEdith Pro</h2>
+    <p style="font-size:.77rem;color:var(--tm)">نسخه ۲.۰ — ویرایشگر حرفه‌ای تصویر تحت وب</p>
+  </div>
+  <div class="ms"><h3><i class="fas fa-code"></i> درباره پروژه</h3>
+    <p>سلام، من عبدالستار رحیمی هستم و این یه پروژه دانشجویی هستش که با کمک این ابزار میتونید خیلی راحت تصاویر خودتون رو ویرایش کنید.</p>
+  </div>
+  <div class="ms"><h3><i class="fas fa-tools"></i> تکنولوژی‌ها</h3>
+    <ul>
+      <li>HTML5 Canvas API برای پردازش pixel-level تصویر</li>
+      <li>JavaScript خالص (Vanilla JS) بدون فریم‌ورک سنگین</li>
+      <li>Supabase برای ثبت‌نام/ورود و ذخیره اطلاعات کاربران</li>
+      <li>Google Fonts برای فونت‌های فارسی و لاتین</li>
+      <li>Glassmorphism Design با CSS3 پیشرفته</li>
+      <li>کاملاً سازگار با GitHub Pages (Static)</li>
+    </ul>
+  </div>
+  <div class="socl">
+    <a href="https://github.com/Abdul-Sattar-Rahimi" class="sl"><i class="fab fa-github"></i> GitHub</a>
+    <a href="https://t.me" class="sl"><i class="fab fa-telegram"></i> تلگرام</a>
+    <a href="mailto:abdulsattarrrahimi@email.com" class="sl"><i class="fas fa-envelope"></i> ایمیل</a>
+  </div>
+</div>
+</div>
+
+<!-- HELP MODAL -->
+<div class="mo" id="HLM">
+<div class="mb">
+  <div class="mhd"><span class="mt">راهنمای برنامه</span><button class="mcl" onclick="closeM('HLM')"><i class="fas fa-times"></i></button></div>
+  <div class="ms"><h3><i class="fas fa-upload"></i> شروع کار</h3>
+    <p>عکس خود را با کلیک روی «بارگذاری» یا کشیدن و رها کردن روی صفحه وارد کنید.</p>
+  </div>
+  <div class="hgrid">
+    <div class="hc"><h4><i class="fas fa-magic" style="color:var(--ac)"></i> فیلترها</h4><p>۱۸ فیلتر آماده + اسلایدرهای دقیق.</p></div>
+    <div class="hc"><h4><i class="fas fa-font" style="color:var(--ac)"></i> متن</h4><p>افزودن متن با ۸ فونت. جا‌به‌جایی با موس.</p></div>
+    <div class="hc"><h4><i class="fas fa-border-style" style="color:var(--ac)"></i> قاب</h4><p>۶ استایل قاب + Vignette.</p></div>
+    <div class="hc"><h4><i class="fas fa-eraser" style="color:var(--ac)"></i> حذف پس‌زمینه</h4><p>سه روش حذف. خروجی PNG شفاف.</p></div>
+    <div class="hc"><h4><i class="fas fa-download" style="color:var(--ac)"></i> ذخیره</h4><p>PNG، JPEG یا WebP با دو سطح کیفیت.</p></div>
+    <div class="hc"><h4><i class="fas fa-paint-brush" style="color:var(--ac)"></i> نقاشی</h4><p>قلموهای متنوع با پشتیبانی از touch.</p></div>
+    <div class="hc"><h4><i class="fas fa-th" style="color:var(--ac)"></i> پیکسل آرت</h4><p>گرید ۱۶×۱۶ یا ۳۲×۳۲ با ابزار کامل.</p></div>
+    <div class="hc"><h4><i class="fas fa-crop-alt" style="color:var(--ac)"></i> تبدیل</h4><p>برش، چرخش، آینه و چرخش آزاد.</p></div>
+  </div>
+  <div class="ms" style="margin-top:14px"><h3><i class="fas fa-keyboard"></i> میانبرها</h3>
+    <ul>
+      <li><strong>Ctrl+Z</strong> — واگرد تا ۲۰ مرحله</li>
+      <li><strong>Ctrl+Y</strong> — انجام مجدد</li>
+      <li><strong>Ctrl+S</strong> — ذخیره سریع PNG</li>
+      <li><strong>Delete</strong> — حذف متن انتخابی</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<div id="TOAST"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   SattarEdith PRO v2.0
+   ═══════════════════════════════════════════════════════════
+   ⚠️ تنظیمات Supabase را در بخش زیر وارد کنید:
+   ۱. به supabase.com بروید و پروژه بسازید
+   ۲. Project Settings → API را باز کنید
+   ۳. Project URL و anon/public key را کپی کنید
+   ═══════════════════════════════════════════════════════════ */
+
+const SUPABASE_URL  = 'YOUR_SUPABASE_URL';   // مثال: https://xyzabc.supabase.co
+const SUPABASE_ANON = 'YOUR_SUPABASE_ANON_KEY'; // مثال: eyJhbGci...
+
+// ── Init Supabase ─────────────────────────────────────────
+let SB = null;
+try {
+  SB = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+} catch(e) {
+  console.warn('Supabase init failed:', e);
+}
+
+// ── Global State ─────────────────────────────────────────
+const G = {
+  img:null, fil:'none',
+  br:0, co:0, sa:0, bl:0, rot:0,
+  draw:false, eraser:false,
+  txts:[], selTxt:null,
+  stks:[], frm:'solid',
+  undo:[], redo:[],
+  crop:false, cropR:null,
+  pxSz:16, pxC:[], pxSel:'#7c5cfc',
+  zoom:1, bold:false, ital:false,
+  currentUser: null,
+  currentFileName: null
+};
+
+// OTP state
+let otpV = '';
+let otpFailCount = 0;  // تعداد دفعاتی که کد اشتباه وارد شده
+let otpAttempts = 0;   // تعداد دفعاتی که ارسال کد زده شده
+let otpInt = null;
+
+// ── DOM References ───────────────────────────────────────
+const MC   = document.getElementById('MC');
+const CTX  = MC.getContext('2d');
+const DC   = document.getElementById('DC');
+const DCTX = DC.getContext('2d');
+const CW   = document.getElementById('CW');
+const DZ   = document.getElementById('DZ');
+let toastT;
+
+// ── Utilities ────────────────────────────────────────────
+function toast(m, d=2300) {
+  const t = document.getElementById('TOAST');
+  t.textContent = m; t.classList.add('on');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('on'), d);
+}
+function openM(id)  { document.getElementById(id).classList.add('on'); }
+function closeM(id) { document.getElementById(id).classList.remove('on'); }
+document.querySelectorAll('.mo').forEach(m =>
+  m.addEventListener('click', e => { if(e.target===m) m.classList.remove('on'); })
+);
+function swT(n, el) {
+  document.querySelectorAll('.ps').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
+  document.getElementById('tab-'+n).classList.add('on');
+  el.classList.add('on');
+}
+
+// ── Simple hash (NOT for production security) ────────────
+async function hashPass(pass) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pass));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+// ══════════════════════════════════════════════════════════
+//  AUTH SYSTEM  (Supabase + localStorage fallback)
+// ══════════════════════════════════════════════════════════
+function swAT(t) {
+  ['LF','RF'].forEach((id,i) => document.getElementById(id).classList.toggle('on',
+    (t==='login'&&i===0)||(t==='reg'&&i===1)));
+  document.querySelectorAll('.atab').forEach((el,i) => el.classList.toggle('on',
+    (t==='login'&&i===0)||(t==='reg'&&i===1)));
+}
+
+function tp(id, el) {
+  const i = document.getElementById(id);
+  const h = i.type === 'password';
+  i.type = h ? 'text' : 'password';
+  el.innerHTML = h ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+}
+
+function chkS(p) {
+  const b=document.getElementById('sbar'), t=document.getElementById('stxt');
+  let s=0;
+  if(p.length>=8)s++; if(/[A-Z]/.test(p))s++; if(/[0-9]/.test(p))s++; if(/[^A-Za-z0-9]/.test(p))s++;
+  const cl=['','#fc5c7d','#fcb85c','#fcb85c','#5cfcb4'];
+  const lb=['','خیلی ضعیف','ضعیف','متوسط','قوی'];
+  b.style.width=(s*25)+'%'; b.style.background=cl[s]; t.textContent=lb[s];
+}
+
+// ── OTP Logic ─────────────────────────────────────────────
+function sendOTP() {
+  const ph = document.getElementById('rph').value;
+  if(!/^09\d{9}$/.test(ph)) {
+    toast('⚠️ شماره موبایل معتبر نیست');
+    return;
+  }
+
+  otpAttempts++;
+  otpV = String(Math.floor(100000 + Math.random() * 900000));
+
+  const otpInput = document.getElementById('rotp');
+  otpInput.disabled = false;
+  otpInput.value = '';
+
+  // اگر دو بار قبلاً کد نزد، بار سوم کد را خودکار پر کن
+  if(otpAttempts >= 3) {
+    otpInput.value = otpV;
+    toast('✅ کد تایید خودکار وارد شد: ' + otpV, 6000);
+  } else {
+    toast('📱 کد تایید: ' + otpV + ' (در محیط واقعی پیامک می‌شود)', 60000);
+  }
+
+  // تایمر ۶۰ ثانیه‌ای
+  let s = 60;
+  clearInterval(otpInt);
+  const btn = document.getElementById('otpB');
+  const tmr = document.getElementById('otmr');
+  btn.disabled = true;
+
+  otpInt = setInterval(() => {
+    s--;
+    tmr.textContent = 'ارسال مجدد تا ' + s + ' ثانیه';
+    if(s <= 0) {
+      clearInterval(otpInt);
+      btn.disabled = false;
+      tmr.textContent = '';
+    }
+  }, 1000);
+}
+
+// ── Login ─────────────────────────────────────────────────
+async function doLogin() {
+  const id = document.getElementById('lid').value.trim();
+  const ps = document.getElementById('lps').value;
+  const err = document.getElementById('lerr');
+  err.textContent = '';
+
+  if(!id || !ps) { err.textContent = 'همه فیلدها الزامی است'; return; }
+
+  if(SB && SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
+    try {
+      const hash = await hashPass(ps);
+      // جستجو با نام کاربری یا ایمیل
+      let query = SB.from('users').select('*');
+      if(id.includes('@')) {
+        query = query.eq('email', id);
+      } else {
+        query = query.eq('username', id);
+      }
+      const { data, error } = await query.single();
+      if(error || !data) { err.textContent = 'کاربر یافت نشد'; return; }
+      if(data.password_hash !== hash) { err.textContent = 'رمز عبور اشتباه است'; return; }
+      G.currentUser = data;
+      onLoginSuccess(data);
+    } catch(e) {
+      err.textContent = 'خطا در اتصال به سرور: ' + e.message;
+    }
+  } else {
+    // Fallback: localStorage
+    const us = JSON.parse(localStorage.getItem('pcusers') || '[]');
+    const u  = us.find(x => (x.username===id || x.email===id) && x.password===ps);
+    if(u) { G.currentUser = u; onLoginSuccess(u); }
+    else   err.textContent = 'اطلاعات ورود اشتباه است';
+  }
+}
+
+// ── Register ──────────────────────────────────────────────
+async function doReg() {
+  const un  = document.getElementById('run').value.trim();
+  const em  = document.getElementById('rem').value.trim();
+  const ph  = document.getElementById('rph').value.trim();
+  const otp = document.getElementById('rotp').value.trim();
+  const p1  = document.getElementById('rp1').value;
+  const p2  = document.getElementById('rp2').value;
+  const err = document.getElementById('rerr');
+  err.textContent = '';
+
+  if(!un||!em||!ph||!p1||!p2) { err.textContent = 'همه فیلدها الزامی است'; return; }
+  if(!/^[a-zA-Z0-9_]{3,20}$/.test(un)) { err.textContent = 'نام کاربری: ۳–۲۰ حرف انگلیسی/عدد/_'; return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { err.textContent = 'ایمیل معتبر نیست'; return; }
+  if(!/^09\d{9}$/.test(ph)) { err.textContent = 'موبایل معتبر نیست'; return; }
+
+  // بررسی کد OTP
+  if(otpV && otp !== otpV) {
+    otpFailCount++;
+    if(otpFailCount >= 2) {
+      // بعد از ۲ بار اشتباه، بار سوم کد خودکار پر می‌شود (در sendOTP)
+      err.textContent = 'کد اشتباه بود. دوباره «ارسال کد» را بزنید تا کد خودکار وارد شود.';
+    } else {
+      err.textContent = 'کد تایید اشتباه است (' + otpFailCount + '/۲ تلاش اشتباه)';
+    }
+    return;
+  }
+
+  if(p1.length < 8) { err.textContent = 'رمز حداقل ۸ کاراکتر باید باشد'; return; }
+  if(p1 !== p2) { err.textContent = 'رمز عبور و تکرار آن یکسان نیستند'; return; }
+
+  const userData = { username: un, email: em, phone: ph };
+
+  if(SB && SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
+    try {
+      const hash = await hashPass(p1);
+      // بررسی تکراری نبودن
+      const { data: existing } = await SB.from('users')
+        .select('id').or(`username.eq.${un},email.eq.${em}`).maybeSingle();
+      if(existing) { err.textContent = 'این نام کاربری یا ایمیل قبلاً ثبت شده'; return; }
+
+      const { data, error } = await SB.from('users').insert([{
+        username: un,
+        email: em,
+        phone: ph,
+        password_hash: hash,
+        created_at: new Date().toISOString()
+      }]).select().single();
+
+      if(error) { err.textContent = 'خطا: ' + error.message; return; }
+      G.currentUser = data;
+      onLoginSuccess(data);
+    } catch(e) {
+      err.textContent = 'خطا در اتصال: ' + e.message;
+    }
+  } else {
+    // Fallback: localStorage
+    const us = JSON.parse(localStorage.getItem('pcusers') || '[]');
+    if(us.find(x => x.username===un || x.email===em)) {
+      err.textContent = 'کاربر از قبل موجود است'; return;
+    }
+    const newUser = { id: Date.now().toString(), ...userData, password: p1 };
+    us.push(newUser);
+    localStorage.setItem('pcusers', JSON.stringify(us));
+    G.currentUser = newUser;
+    onLoginSuccess(newUser);
+  }
+}
+
+function onLoginSuccess(u) {
+  document.getElementById('AO').style.display = 'none';
+  const n = u.username || u.displayName || u.email || 'کاربر';
+  document.getElementById('UNAME').textContent = n;
+  document.getElementById('UBG').style.display = '';
+  document.getElementById('UAV').textContent = n.charAt(0).toUpperCase();
+  toast('👋 خوش آمدی، ' + n + '!');
+}
+
+async function usrM() {
+  const n = G.currentUser ? (G.currentUser.username || G.currentUser.email) : 'کاربر';
+  if(confirm(n + '\nآیا می‌خواهید از حساب خارج شوید؟')) {
+    G.currentUser = null;
+    document.getElementById('AO').style.display = 'flex';
+    document.getElementById('UBG').style.display = 'none';
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+//  SUPABASE: ذخیره عکس آپلود شده
+// ══════════════════════════════════════════════════════════
+async function saveImageToSupabase(file, dataUrl) {
+  if(!SB || SUPABASE_URL === 'YOUR_SUPABASE_URL') return;
+  if(!G.currentUser) return;
+
+  try {
+    // فشرده‌سازی برای ذخیره (max 800px)
+    const tmp = document.createElement('canvas');
+    const img = new Image();
+    await new Promise(res => { img.onload = res; img.src = dataUrl; });
+    const maxW = 800, sc = Math.min(1, maxW / img.width);
+    tmp.width = Math.round(img.width * sc);
+    tmp.height = Math.round(img.height * sc);
+    tmp.getContext('2d').drawImage(img, 0, 0, tmp.width, tmp.height);
+    const compressed = tmp.toDataURL('image/jpeg', 0.7);
+
+    await SB.from('uploaded_images').insert([{
+      user_id: G.currentUser.id || null,
+      username: G.currentUser.username || G.currentUser.email,
+      image_data: compressed,
+      filename: file ? file.name : 'image.jpg',
+      uploaded_at: new Date().toISOString()
+    }]);
+    console.log('✅ تصویر در Supabase ذخیره شد');
+  } catch(e) {
+    console.warn('ذخیره در Supabase ناموفق:', e);
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+//  IMAGE LOADING
+// ══════════════════════════════════════════════════════════
+document.getElementById('FI').addEventListener('change', e => {
+  if(e.target.files[0]) loadF(e.target.files[0]);
+});
+DZ.addEventListener('dragover',  e => { e.preventDefault(); DZ.classList.add('dov'); });
+DZ.addEventListener('dragleave', ()  => DZ.classList.remove('dov'));
+DZ.addEventListener('drop', e => {
+  e.preventDefault(); DZ.classList.remove('dov');
+  const f = e.dataTransfer.files[0];
+  if(f && f.type.startsWith('image/')) loadF(f);
+});
+document.getElementById('CA').addEventListener('dragover', e => e.preventDefault());
+document.getElementById('CA').addEventListener('drop', e => {
+  e.preventDefault();
+  const f = e.dataTransfer.files[0];
+  if(f && f.type.startsWith('image/')) loadF(f);
+});
+
+function loadF(file) {
+  G.currentFileName = file ? file.name : null;
+  const r = new FileReader();
+  r.onload = ev => {
+    const img = new Image();
+    img.onload = () => {
+      G.img = img;
+      const mw = Math.min(img.width, 820), sc = mw / img.width;
+      MC.width  = Math.round(img.width * sc);
+      MC.height = Math.round(img.height * sc);
+      DC.width  = MC.width; DC.height = MC.height;
+      render(); showCW();
+      document.getElementById('finf').textContent =
+        (file ? file.name : 'تصویر') + ' | ' + img.width + '×' + img.height + 'px';
+      pushU();
+      G.txts = []; G.stks = []; refreshTL(); clrDC();
+      document.querySelectorAll('.tov,.stk-ov').forEach(el => el.remove());
+      toast('✅ تصویر بارگذاری شد');
+      // ذخیره در Supabase
+      saveImageToSupabase(file, ev.target.result);
+    };
+    img.src = ev.target.result;
+  };
+  r.readAsDataURL(file);
+}
+
+function showCW() {
+  DZ.style.display = 'none'; CW.style.display = 'block';
+  document.getElementById('BReset').style.display = '';
+  document.getElementById('SDW').style.display = '';
+}
+
+// ══════════════════════════════════════════════════════════
+//  RENDER ENGINE
+// ══════════════════════════════════════════════════════════
+function render() {
+  if(!G.img) return;
+  const W = MC.width, H = MC.height;
+  CTX.clearRect(0, 0, W, H);
+  CTX.save(); CTX.translate(W/2, H/2); CTX.rotate(G.rot * Math.PI / 180);
+  CTX.drawImage(G.img, -W/2, -H/2, W, H);
+  CTX.restore();
+  applyFilt(G.fil);
+  MC.style.filter = cssF();
+}
+function cssF() {
+  return `brightness(${1+G.br/100}) contrast(${1+G.co/100}) saturate(${1+G.sa/100}) blur(${G.bl}px)`;
+}
+
+// ══════════════════════════════════════════════════════════
+//  PIXEL-LEVEL FILTERS (18 filters)
+// ══════════════════════════════════════════════════════════
+function applyFilt(f) {
+  if(f === 'none') { MC.style.filter = cssF(); return; }
+  const W=MC.width, H=MC.height, id=CTX.getImageData(0,0,W,H), d=id.data;
+  for(let i=0; i<d.length; i+=4) {
+    let r=d[i], g=d[i+1], b=d[i+2], av=(r+g+b)/3;
+    switch(f){
+      case 'grayscale': d[i]=d[i+1]=d[i+2]=av; break;
+      case 'sepia': d[i]=Math.min(255,r*.393+g*.769+b*.189);d[i+1]=Math.min(255,r*.349+g*.686+b*.168);d[i+2]=Math.min(255,r*.272+g*.534+b*.131); break;
+      case 'invert': d[i]=255-r;d[i+1]=255-g;d[i+2]=255-b; break;
+      case 'vintage': d[i]=Math.min(255,r*.9+40);d[i+1]=Math.min(255,g*.8+20);d[i+2]=Math.min(255,b*.5); break;
+      case 'bright': d[i]=Math.min(255,r+50);d[i+1]=Math.min(255,g+50);d[i+2]=Math.min(255,b+50); break;
+      case 'clarendon': d[i]=Math.min(255,r*1.1);d[i+1]=Math.min(255,g*.9);d[i+2]=Math.min(255,b*1.3); break;
+      case 'gingham': d[i]=Math.min(255,r*1.05+10);d[i+1]=Math.min(255,g*1.05+5);d[i+2]=Math.min(255,b*.95); break;
+      case 'moon': { const gr=Math.round(av*.9+20); d[i]=gr;d[i+1]=gr;d[i+2]=Math.min(255,gr+15); break; }
+      case 'lark': d[i]=Math.min(255,r*1.2-30);d[i+1]=Math.min(255,g*1.1);d[i+2]=Math.min(255,b*.9+20); break;
+      case 'reyes': d[i]=Math.min(255,r*.9+40);d[i+1]=Math.min(255,g*.85+35);d[i+2]=Math.min(255,b*.75+30); break;
+      case 'juno': d[i]=Math.min(255,r*1.15);d[i+1]=Math.min(255,g*.95);d[i+2]=Math.min(255,b*.8); break;
+      case 'aged': d[i]=Math.min(255,av*.7+r*.4+50);d[i+1]=Math.min(255,av*.6+g*.3+35);d[i+2]=Math.min(255,av*.4+b*.2+10); break;
+      case 'faded': d[i]=Math.min(255,r*.75+50);d[i+1]=Math.min(255,g*.75+48);d[i+2]=Math.min(255,b*.75+44); break;
+      case 'daguerro': { const s=.299*r+.587*g+.114*b; d[i]=Math.min(255,s*.85+15);d[i+1]=Math.min(255,s*.85+12);d[i+2]=Math.min(255,s*.8+20); break; }
+      case 'retro70': d[i]=Math.min(255,r*1.1+20);d[i+1]=Math.min(255,g*.85+15);d[i+2]=Math.min(255,b*.6); break;
+      case 'polaroid': d[i]=Math.min(255,r*1.05+25);d[i+1]=Math.min(255,g+20);d[i+2]=Math.min(255,b*.85+30); break;
+      case 'worn': { const gw=av; d[i]=Math.min(255,gw*.6+r*.4+10);d[i+1]=Math.min(255,gw*.5+g*.4+8);d[i+2]=Math.min(255,gw*.35+b*.3+5); break; }
+      case 'sunny': d[i]=Math.min(255,r*1.15+15);d[i+1]=Math.min(255,g*1.05+5);d[i+2]=Math.min(255,b*.85); break;
+      case 'cloudy': d[i]=Math.min(255,r*.85+20);d[i+1]=Math.min(255,g*.88+20);d[i+2]=Math.min(255,b*.95+25); break;
+      case 'rainy': d[i]=Math.min(255,r*.7+10);d[i+1]=Math.min(255,g*.78+10);d[i+2]=Math.min(255,b*1.1+20); break;
+      case 'foggy': d[i]=Math.min(255,r*.65+100);d[i+1]=Math.min(255,g*.65+102);d[i+2]=Math.min(255,b*.65+108); break;
+      case 'snowy': d[i]=Math.min(255,r*.8+80);d[i+1]=Math.min(255,g*.82+80);d[i+2]=Math.min(255,b*.9+90); break;
+      case 'dusk': d[i]=Math.min(255,r*1.05+25);d[i+1]=Math.min(255,g*.75+10);d[i+2]=Math.min(255,b*1.1+20); break;
+    }
+  }
+  CTX.putImageData(id, 0, 0); MC.style.filter = cssF();
+}
+function apF(f, el) {
+  if(!G.img){toast('⚠️ ابتدا تصویری بارگذاری کنید');return;}
+  G.fil=f; document.querySelectorAll('.fc').forEach(c=>c.classList.remove('on')); el.classList.add('on'); render(); pushU();
+}
+function updA() {
+  G.br=+document.getElementById('sB').value; G.co=+document.getElementById('sC').value;
+  G.sa=+document.getElementById('sS').value; G.bl=+document.getElementById('sBl').value;
+  document.getElementById('vB').textContent=G.br; document.getElementById('vC').textContent=G.co;
+  document.getElementById('vS').textContent=G.sa; document.getElementById('vBl').textContent=G.bl;
+  render();
+}
+function autoE() {
+  if(!G.img)return;
+  document.getElementById('sB').value=15; document.getElementById('sC').value=20;
+  document.getElementById('sS').value=25; document.getElementById('sBl').value=0;
+  G.br=15;G.co=20;G.sa=25;G.bl=0;
+  document.getElementById('vB').textContent=15; document.getElementById('vC').textContent=20;
+  document.getElementById('vS').textContent=25; document.getElementById('vBl').textContent=0;
+  render(); toast('✨ تنظیم خودکار اعمال شد'); pushU();
+}
+
+// ══════════════════════════════════════════════════════════
+//  VIGNETTE
+// ══════════════════════════════════════════════════════════
+function hexRGB(h) { return {r:parseInt(h.slice(1,3),16),g:parseInt(h.slice(3,5),16),b:parseInt(h.slice(5,7),16)}; }
+function apVig() {
+  if(!G.img){toast('⚠️ تصویری بارگذاری نشده');return;}
+  const col=document.getElementById('VC').value;
+  const inten=+document.getElementById('VI').value/100;
+  const sz=+document.getElementById('VSZ').value/100;
+  const {r,g,b}=hexRGB(col), W=MC.width, H=MC.height;
+  const grd=CTX.createRadialGradient(W/2,H/2,Math.min(W,H)*sz*0.3,W/2,H/2,Math.min(W,H)*0.75);
+  grd.addColorStop(0,`rgba(${r},${g},${b},0)`);
+  grd.addColorStop(1,`rgba(${r},${g},${b},${inten})`);
+  CTX.save(); CTX.fillStyle=grd; CTX.fillRect(0,0,W,H); CTX.restore();
+  pushU(); toast('✅ قاب محو اعمال شد');
+}
+
+// ══════════════════════════════════════════════════════════
+//  FRAME STYLES
+// ══════════════════════════════════════════════════════════
+const FT = {
+  solid:   (c,w,h,s,cl)=>{c.strokeStyle=cl;c.lineWidth=s;c.strokeRect(s/2,s/2,w-s,h-s);},
+  double:  (c,w,h,s,cl)=>{c.strokeStyle=cl;c.lineWidth=s*.4;c.strokeRect(s*.3,s*.3,w-s*.6,h-s*.6);c.strokeRect(s*.8,s*.8,w-s*1.6,h-s*1.6);},
+  shadow:  (c,w,h,s,cl)=>{c.shadowColor=cl;c.shadowBlur=s*1.5;c.strokeStyle=cl;c.lineWidth=s*.4;c.strokeRect(s,s,w-s*2,h-s*2);c.shadowBlur=0;},
+  rounded: (c,w,h,s,cl)=>{const rd=s*1.5;c.strokeStyle=cl;c.lineWidth=s;c.beginPath();c.moveTo(rd,s/2);c.lineTo(w-rd,s/2);c.arcTo(w-s/2,s/2,w-s/2,rd,rd);c.lineTo(w-s/2,h-rd);c.arcTo(w-s/2,h-s/2,w-rd,h-s/2,rd);c.lineTo(rd,h-s/2);c.arcTo(s/2,h-s/2,s/2,h-rd,rd);c.lineTo(s/2,rd);c.arcTo(s/2,s/2,rd,s/2,rd);c.stroke();},
+  vintage: (c,w,h,s,cl)=>{c.strokeStyle=cl;c.lineWidth=s*.5;c.setLineDash([s,s*.5]);c.strokeRect(s,s,w-s*2,h-s*2);c.setLineDash([]);c.lineWidth=s*.2;c.strokeRect(s*.3,s*.3,w-s*.6,h-s*.6);},
+  metallic:(c,w,h,s)=>{const g=c.createLinearGradient(0,0,w,h);g.addColorStop(0,'#c0c0c0');g.addColorStop(.3,'#fff');g.addColorStop(.6,'#a0a0a0');g.addColorStop(1,'#e0e0e0');c.strokeStyle=g;c.lineWidth=s;c.strokeRect(s/2,s/2,w-s,h-s);}
+};
+function selFR(n,el){G.frm=n;document.querySelectorAll('.frc').forEach(c=>c.classList.remove('on'));el.classList.add('on');updFP();}
+function updFP(){
+  const s=+document.getElementById('FRS').value, cl=document.getElementById('FRC').value;
+  document.getElementById('VFRS').textContent=s;
+  Object.keys(FT).forEach(n=>{const cv=document.getElementById('fp-'+n);if(!cv)return;cv.width=42;cv.height=31;const tc=cv.getContext('2d');tc.fillStyle='#222';tc.fillRect(0,0,42,31);FT[n](tc,42,31,4,cl);});
+}
+function apFR(){
+  if(!G.img){toast('⚠️ تصویری بارگذاری نشده');return;}
+  FT[G.frm](CTX,MC.width,MC.height,+document.getElementById('FRS').value,document.getElementById('FRC').value);
+  pushU(); toast('✅ قاب اعمال شد');
+}
+document.getElementById('FRC').addEventListener('input',updFP);
+
+// ══════════════════════════════════════════════════════════
+//  BACKGROUND REMOVAL
+// ══════════════════════════════════════════════════════════
+function bgMch(){
+  const m=document.getElementById('BGM').value;
+  document.getElementById('BGCO').style.display=m==='color'?'':'none';
+  document.getElementById('BGTH').style.display=m==='threshold'?'':'none';
+}
+function removeBG(){
+  if(!G.img){toast('⚠️ تصویری بارگذاری نشده');return;}
+  const prog=document.getElementById('BGP'); prog.classList.add('on');
+  setTimeout(()=>{
+    try{
+      const m=document.getElementById('BGM').value, W=MC.width, H=MC.height;
+      const id=CTX.getImageData(0,0,W,H), d=id.data;
+      if(m==='color'){
+        const {r:tr,g:tg,b:tb}=hexRGB(document.getElementById('BGT').value);
+        const tol=+document.getElementById('BGTO').value, fth=+document.getElementById('BGF').value;
+        for(let i=0;i<d.length;i+=4){
+          const dr=d[i]-tr,dg=d[i+1]-tg,db=d[i+2]-tb;
+          const dist=Math.sqrt(dr*dr+dg*dg+db*db);
+          if(dist<tol) d[i+3]=fth>0?Math.round(Math.max(0,1-(tol-dist)/(fth*8))*255):0;
+        }
+      } else if(m==='threshold'){
+        const th=+document.getElementById('BGTHV').value;
+        for(let i=0;i<d.length;i+=4) if(.299*d[i]+.587*d[i+1]+.114*d[i+2]>th) d[i+3]=0;
+      } else {
+        const src=new Uint8ClampedArray(d);
+        for(let row=1;row<H-1;row++) for(let col=1;col<W-1;col++){
+          const idx=(row*W+col)*4;
+          const lC=.299*src[idx]+.587*src[idx+1]+.114*src[idx+2];
+          const lR=.299*src[idx+4]+.587*src[idx+5]+.114*src[idx+6];
+          const lB=.299*src[idx+W*4]+.587*src[idx+W*4+1]+.114*src[idx+W*4+2];
+          const e=Math.abs(lC-lR)+Math.abs(lC-lB);
+          if(e<15) d[idx+3]=Math.round(e/15*200);
+        }
+      }
+      CTX.putImageData(id,0,0);
+      const tmp=document.createElement('canvas'); tmp.width=W; tmp.height=H;
+      tmp.getContext('2d').putImageData(id,0,0); G.img=tmp;
+      pushU(); toast('✅ پس‌زمینه حذف شد — از منوی ذخیره، PNG انتخاب کنید');
+    } catch(e){ toast('❌ خطا: '+e.message); }
+    prog.classList.remove('on');
+  }, 80);
+}
+
+// ══════════════════════════════════════════════════════════
+//  SAVE
+// ══════════════════════════════════════════════════════════
+function tDD(){ document.getElementById('DDM').classList.toggle('on'); }
+document.addEventListener('click', e => {
+  if(!document.getElementById('SDW').contains(e.target))
+    document.getElementById('DDM').classList.remove('on');
+});
+function saveI(fmt='png', q='hi') {
+  if(!G.img){toast('⚠️ تصویری بارگذاری نشده');return;}
+  document.getElementById('DDM').classList.remove('on');
+  const tmp=document.createElement('canvas'); tmp.width=MC.width; tmp.height=MC.height;
+  const tc=tmp.getContext('2d');
+  tc.filter=cssF();
+  if(G.img instanceof HTMLCanvasElement) tc.drawImage(G.img,0,0,tmp.width,tmp.height);
+  else tc.drawImage(MC,0,0);
+  tc.filter='none';
+  tc.drawImage(DC,0,0);
+  G.txts.forEach(l => {
+    tc.save();
+    tc.font=`${l.i?'italic ':''} ${l.b?'bold ':''} ${l.sz}px '${l.f}',sans-serif`;
+    tc.fillStyle=l.c; tc.globalAlpha=l.op||1;
+    tc.translate((l.x/100)*tmp.width,(l.y/100)*tmp.height);
+    tc.rotate(l.r*Math.PI/180); tc.fillText(l.t,0,0); tc.restore();
+  });
+  G.stks.forEach(s => {
+    const wr=CW.getBoundingClientRect(), er=s.el.getBoundingClientRect();
+    const sx=(er.left-wr.left)*(tmp.width/CW.offsetWidth);
+    const sy=(er.top-wr.top)*(tmp.height/CW.offsetHeight);
+    tc.font=(2.5*(tmp.width/CW.offsetWidth)*16)+'px serif';
+    tc.fillText(s.em,sx,sy+40);
+  });
+  const mimes={'png':'image/png','jpeg':'image/jpeg','webp':'image/webp'};
+  const mime=mimes[fmt]||'image/png';
+  const qv=q==='lo'?0.5:0.95;
+  const url=fmt==='png'?tmp.toDataURL('image/png'):tmp.toDataURL(mime,qv);
+  const a=document.createElement('a'); a.download='SattarEdith.'+fmt; a.href=url; a.click();
+  toast('✅ ذخیره شد: '+fmt.toUpperCase()+' '+(fmt!=='png'?'(کیفیت '+(q==='lo'?'50':'95')+'%)':''));
+}
+
+// ══════════════════════════════════════════════════════════
+//  TRANSFORM
+// ══════════════════════════════════════════════════════════
+function rotI(deg){
+  if(!G.img)return;
+  const tmp=document.createElement('canvas'),tc=tmp.getContext('2d');
+  const rad=deg*Math.PI/180;
+  if(Math.abs(deg)===90){tmp.width=MC.height;tmp.height=MC.width;}
+  else{tmp.width=MC.width;tmp.height=MC.height;}
+  tc.translate(tmp.width/2,tmp.height/2); tc.rotate(rad);
+  tc.drawImage(MC,-MC.width/2,-MC.height/2);
+  const ni=new Image(); ni.onload=()=>{G.img=ni;MC.width=tmp.width;MC.height=tmp.height;DC.width=tmp.width;DC.height=tmp.height;render();pushU();};
+  ni.src=tmp.toDataURL();
+}
+function flipI(axis){
+  if(!G.img)return;
+  const tmp=document.createElement('canvas'); tmp.width=MC.width; tmp.height=MC.height;
+  const tc=tmp.getContext('2d');
+  tc.translate(axis==='h'?MC.width:0,axis==='v'?MC.height:0);
+  tc.scale(axis==='h'?-1:1,axis==='v'?-1:1); tc.drawImage(MC,0,0);
+  const ni=new Image(); ni.onload=()=>{G.img=ni;render();pushU();};
+  ni.src=tmp.toDataURL();
+}
+function freeR(v){if(!G.img)return;G.rot=+v;document.getElementById('VRR').textContent=v+'°';render();}
+
+// ══════════════════════════════════════════════════════════
+//  CROP
+// ══════════════════════════════════════════════════════════
+const CO=document.getElementById('CO'), CS=document.getElementById('CS');
+let cropD=false, cropS=null;
+function togCrop(){
+  G.crop=!G.crop; CO.style.display=G.crop?'block':'none';
+  document.getElementById('CRPB').classList.toggle('on',G.crop);
+  document.getElementById('ACRPB').style.display=G.crop?'':'none';
+  CS.style.display='none'; G.cropR=null;
+}
+CO.addEventListener('mousedown',e=>{
+  if(!G.crop)return; cropD=true;
+  const r=CO.getBoundingClientRect(); cropS={x:e.clientX-r.left,y:e.clientY-r.top};
+  CS.style.cssText=`left:${cropS.x}px;top:${cropS.y}px;width:0;height:0;display:block`;
+});
+CO.addEventListener('mousemove',e=>{
+  if(!cropD)return;
+  const r=CO.getBoundingClientRect();
+  const cx=e.clientX-r.left,cy=e.clientY-r.top;
+  const x=Math.min(cx,cropS.x),y=Math.min(cy,cropS.y);
+  const w=Math.abs(cx-cropS.x),h=Math.abs(cy-cropS.y);
+  CS.style.left=x+'px';CS.style.top=y+'px';CS.style.width=w+'px';CS.style.height=h+'px';
+  G.cropR={x,y,w,h};
+});
+CO.addEventListener('mouseup',()=>cropD=false);
+function applyCrop(){
+  if(!G.cropR||!G.img)return;
+  const{x,y,w,h}=G.cropR;
+  if(w<10||h<10){toast('ناحیه برش خیلی کوچک است');return;}
+  const sx=MC.width/MC.offsetWidth, sy=MC.height/MC.offsetHeight;
+  const tmp=document.createElement('canvas'); tmp.width=w*sx; tmp.height=h*sy;
+  tmp.getContext('2d').drawImage(MC,x*sx,y*sy,w*sx,h*sy,0,0,w*sx,h*sy);
+  const ni=new Image(); ni.onload=()=>{G.img=ni;MC.width=tmp.width;MC.height=tmp.height;DC.width=tmp.width;DC.height=tmp.height;render();pushU();};
+  ni.src=tmp.toDataURL();
+  togCrop(); toast('✅ برش اعمال شد');
+}
+
+// ══════════════════════════════════════════════════════════
+//  DRAWING TOOL
+// ══════════════════════════════════════════════════════════
+let isD=false,lx=0,ly=0,spI=null;
+function togD(){G.draw=!G.draw;DC.classList.toggle('on',G.draw);document.getElementById('DTB').innerHTML=G.draw?'<i class="fas fa-stop"></i> غیرفعال کردن':'<i class="fas fa-paint-brush"></i> فعال کردن';}
+function togER(){G.eraser=!G.eraser;document.getElementById('ERB').classList.toggle('on',G.eraser);}
+function gPos(e){const r=DC.getBoundingClientRect();return{x:(e.clientX-r.left)*(DC.width/r.width),y:(e.clientY-r.top)*(DC.height/r.height)};}
+DC.addEventListener('mousedown',e=>{if(!G.draw)return;isD=true;const p=gPos(e);lx=p.x;ly=p.y;if(document.getElementById('BT').value==='spray')spI=setInterval(()=>doSpray(lx,ly),30);});
+DC.addEventListener('mousemove',e=>{if(!isD)return;const p=gPos(e);doDraw(p.x,p.y);});
+DC.addEventListener('mouseup',()=>{isD=false;clearInterval(spI);DCTX.setLineDash([]);DCTX.globalCompositeOperation='source-over';DCTX.globalAlpha=1;});
+DC.addEventListener('mouseleave',()=>{isD=false;clearInterval(spI);});
+DC.addEventListener('touchstart',e=>{e.preventDefault();if(!G.draw)return;isD=true;const p=gPos(e.touches[0]);lx=p.x;ly=p.y;},{passive:false});
+DC.addEventListener('touchmove',e=>{e.preventDefault();if(!isD)return;const p=gPos(e.touches[0]);doDraw(p.x,p.y);},{passive:false});
+DC.addEventListener('touchend',()=>{isD=false;},{passive:false});
+function doDraw(x,y){
+  const bt=document.getElementById('BT').value, sz=+document.getElementById('BS').value;
+  const op=(+document.getElementById('BO').value)/100;
+  if(bt==='spray'){lx=x;ly=y;return;}
+  DCTX.lineWidth=sz; DCTX.lineCap=bt==='square'?'square':'round';
+  DCTX.globalAlpha=op;
+  DCTX.strokeStyle=G.eraser?'rgba(0,0,0,1)':document.getElementById('DC2').value;
+  DCTX.globalCompositeOperation=G.eraser?'destination-out':'source-over';
+  DCTX.setLineDash(bt==='dashed'?[sz*1.5,sz]:[]);
+  DCTX.beginPath(); DCTX.moveTo(lx,ly); DCTX.lineTo(x,y); DCTX.stroke();
+  lx=x; ly=y;
+}
+function doSpray(x,y){
+  const sz=+document.getElementById('BS').value, op=(+document.getElementById('BO').value)/100;
+  DCTX.globalAlpha=op*0.3; DCTX.fillStyle=document.getElementById('DC2').value;
+  for(let i=0;i<35;i++){const a=Math.random()*2*Math.PI,rd=Math.random()*sz*1.5;DCTX.beginPath();DCTX.arc(x+rd*Math.cos(a),y+rd*Math.sin(a),1,0,Math.PI*2);DCTX.fill();}
+  DCTX.globalAlpha=1;
+}
+function clrDC(){DCTX.clearRect(0,0,DC.width,DC.height);}
+function clrDraw(){clrDC();toast('🗑️ نقاشی پاک شد');}
+function mergeDraw(){
+  if(!G.img)return;
+  CTX.drawImage(DC,0,0); clrDC();
+  const ni=new Image(); ni.onload=()=>{G.img=ni;render();pushU();};
+  ni.src=MC.toDataURL(); toast('✅ ادغام شد');
+}
+
+// ══════════════════════════════════════════════════════════
+//  TEXT LAYERS
+// ══════════════════════════════════════════════════════════
+let txtID=0;
+function tBold(){G.bold=!G.bold;document.getElementById('BBold').classList.toggle('on',G.bold);}
+function tItal(){G.ital=!G.ital;document.getElementById('BItal').classList.toggle('on',G.ital);}
+function updST(){
+  if(!G.selTxt)return;
+  const l=G.txts.find(l=>l.id===G.selTxt); if(!l)return;
+  l.r=+document.getElementById('TR').value; l.op=(+document.getElementById('TOP').value)/100;
+  const el=document.getElementById('te-'+l.id);
+  if(el){el.style.transform=`rotate(${l.r}deg)`;el.style.opacity=l.op;}
+}
+function addTxt(){
+  if(!G.img){toast('⚠️ تصویری بارگذاری نشده');return;}
+  const t=document.getElementById('TI').value.trim(); if(!t){toast('⚠️ متنی وارد کنید');return;}
+  const l={id:++txtID,t,f:document.getElementById('TF').value,c:document.getElementById('TC').value,
+    sz:+document.getElementById('TS').value,x:50,y:50,r:+document.getElementById('TR').value,
+    b:G.bold,i:G.ital,op:(+document.getElementById('TOP').value)/100};
+  G.txts.push(l); mkTEl(l); refreshTL(); toast('✅ متن اضافه شد');
+}
+function mkTEl(l){
+  const el=document.createElement('div'); el.className='tov'; el.id='te-'+l.id;
+  el.style.cssText=`left:${l.x}%;top:${l.y}%;font-family:'${l.f}',sans-serif;color:${l.c};font-size:${l.sz}px;font-weight:${l.b?'bold':'normal'};font-style:${l.i?'italic':'normal'};transform:rotate(${l.r}deg);opacity:${l.op};padding:4px;border:1px dashed rgba(124,92,252,0);z-index:10`;
+  el.textContent=l.t; CW.appendChild(el);
+  let ox,oy,drag=false;
+  el.addEventListener('mousedown',e=>{e.stopPropagation();selTL(l.id);drag=true;const r=CW.getBoundingClientRect();ox=e.clientX-r.left-(l.x/100*CW.offsetWidth);oy=e.clientY-r.top-(l.y/100*CW.offsetHeight);});
+  document.addEventListener('mousemove',e=>{if(!drag)return;const r=CW.getBoundingClientRect();l.x=Math.max(0,Math.min(100,((e.clientX-r.left-ox)/CW.offsetWidth)*100));l.y=Math.max(0,Math.min(100,((e.clientY-r.top-oy)/CW.offsetHeight)*100));el.style.left=l.x+'%';el.style.top=l.y+'%';});
+  document.addEventListener('mouseup',()=>drag=false);
+  el.addEventListener('click',e=>{e.stopPropagation();selTL(l.id);});
+}
+function selTL(id){
+  G.selTxt=id;
+  document.querySelectorAll('.tov').forEach(el=>el.style.border='1px dashed rgba(124,92,252,0)');
+  document.getElementById('te-'+id)?.setAttribute('style',document.getElementById('te-'+id).getAttribute('style').replace('rgba(124,92,252,0)','rgba(124,92,252,.7)'));
+  document.querySelectorAll('.tli').forEach(it=>it.classList.remove('on'));
+  document.getElementById('tl-'+id)?.classList.add('on');
+}
+function refreshTL(){
+  const list=document.getElementById('TLL'); list.innerHTML='';
+  G.txts.forEach(l=>{
+    const it=document.createElement('div'); it.className='tli'+(l.id===G.selTxt?' on':''); it.id='tl-'+l.id;
+    it.innerHTML=`<span style="font-family:'${l.f}';color:${l.c};font-size:.76rem">${l.t.substring(0,14)}</span><button class="btn bic bsm" onclick="flatTxt(${l.id})" title="ادغام در عکس"><i class="fas fa-check"></i></button>`;
+    it.addEventListener('click',()=>selTL(l.id)); list.appendChild(it);
+  });
+}
+function rmST(){if(!G.selTxt)return;G.txts=G.txts.filter(l=>l.id!==G.selTxt);document.getElementById('te-'+G.selTxt)?.remove();G.selTxt=null;refreshTL();}
+function flatTxt(id){
+  const l=G.txts.find(l=>l.id===id); if(!l)return;
+  CTX.save();
+  CTX.font=`${l.i?'italic ':''} ${l.b?'bold ':''} ${l.sz}px '${l.f}',sans-serif`;
+  CTX.fillStyle=l.c; CTX.globalAlpha=l.op||1;
+  CTX.translate((l.x/100)*MC.width,(l.y/100)*MC.height); CTX.rotate(l.r*Math.PI/180);
+  CTX.fillText(l.t,0,0); CTX.restore();
+  G.txts=G.txts.filter(x=>x.id!==id); document.getElementById('te-'+id)?.remove();
+  refreshTL(); pushU(); toast('✅ متن ادغام شد');
+}
+
+// ══════════════════════════════════════════════════════════
+//  PIXEL ART
+// ══════════════════════════════════════════════════════════
+const PXC=document.getElementById('PXC'), PCTX=PXC.getContext('2d'), CELL=16;
+const PAL=['#ff0000','#ff8800','#ffff00','#00ff00','#00ffff','#0000ff','#ff00ff','#ffffff','#000000','#888888','#7c5cfc','#fc5cf7','#5cfcb4','#fc5c7d','#fcb85c','#3b4a6b'];
+function initPX(sz){
+  G.pxSz=sz; PXC.width=sz*CELL; PXC.height=sz*CELL;
+  G.pxC=Array(sz*sz).fill(''); drawPX();
+}
+function drawPX(){
+  const sz=G.pxSz; PCTX.clearRect(0,0,PXC.width,PXC.height);
+  for(let row=0;row<sz;row++) for(let col=0;col<sz;col++){
+    const idx=row*sz+col;
+    PCTX.fillStyle=G.pxC[idx]||((row+col)%2===0?'#2a2a2a':'#1a1a1a');
+    PCTX.fillRect(col*CELL,row*CELL,CELL,CELL);
+  }
+  PCTX.strokeStyle='rgba(255,255,255,.05)'; PCTX.lineWidth=.5;
+  for(let i=0;i<=sz;i++){PCTX.beginPath();PCTX.moveTo(i*CELL,0);PCTX.lineTo(i*CELL,sz*CELL);PCTX.stroke();PCTX.beginPath();PCTX.moveTo(0,i*CELL);PCTX.lineTo(sz*CELL,i*CELL);PCTX.stroke();}
+}
+function setPXS(s){initPX(s);toast('گرید '+s+'×'+s);}
+function selPC(c){G.pxSel=c;document.querySelectorAll('.psw').forEach(s=>s.classList.toggle('on',s.dataset.c===c));}
+function buildPAL(){
+  const row=document.getElementById('PALR');
+  PAL.forEach(c=>{const s=document.createElement('div');s.className='psw';s.dataset.c=c;s.style.background=c;s.onclick=()=>{selPC(c);document.getElementById('PXCL').value=c;};row.appendChild(s);});
+  selPC(PAL[10]);
+}
+let pxD=false;
+PXC.addEventListener('mousedown',e=>{pxD=true;pxPaint(e);});
+PXC.addEventListener('mousemove',e=>{if(pxD)pxPaint(e);});
+PXC.addEventListener('mouseup',()=>pxD=false);
+PXC.addEventListener('mouseleave',()=>pxD=false);
+PXC.addEventListener('touchstart',e=>{e.preventDefault();pxD=true;pxPaint(e.touches[0]);},{passive:false});
+PXC.addEventListener('touchmove',e=>{e.preventDefault();if(pxD)pxPaint(e.touches[0]);},{passive:false});
+PXC.addEventListener('touchend',()=>pxD=false);
+function pxPaint(e){
+  const r=PXC.getBoundingClientRect();
+  const col=Math.floor((e.clientX-r.left)/CELL), row=Math.floor((e.clientY-r.top)/CELL);
+  const sz=G.pxSz; if(col<0||col>=sz||row<0||row>=sz)return;
+  const idx=row*sz+col, tool=document.getElementById('PXT').value;
+  if(tool==='draw')G.pxC[idx]=G.pxSel;
+  else if(tool==='eraser')G.pxC[idx]='';
+  else if(tool==='bucket'){bucket(col,row,G.pxC[idx],G.pxSel);return;}
+  drawPX();
+}
+function bucket(col,row,old,nw){
+  if(old===nw)return;
+  const sz=G.pxSz,stack=[[col,row]],vis=new Set();
+  while(stack.length){const[c,r]=stack.pop();const k=r*sz+c;if(c<0||c>=sz||r<0||r>=sz||vis.has(k))continue;if(G.pxC[k]!==old)continue;vis.add(k);G.pxC[k]=nw;stack.push([c+1,r],[c-1,r],[c,r+1],[c,r-1]);}
+  drawPX();
+}
+function clrPX(){G.pxC=Array(G.pxSz*G.pxSz).fill('');drawPX();}
+function savePX(){const a=document.createElement('a');a.download='pixel-art.png';a.href=PXC.toDataURL();a.click();}
+function addPXtoImg(){if(!G.img){toast('⚠️ ابتدا تصویری بارگذاری کنید');return;}CTX.drawImage(PXC,(MC.width-PXC.width)/2,(MC.height-PXC.height)/2);pushU();toast('✅ پیکسل آرت اضافه شد');}
+
+// ══════════════════════════════════════════════════════════
+//  STICKERS
+// ══════════════════════════════════════════════════════════
+const STKS=['❤️','😍','🔥','⭐','🎉','✨','🌈','💯','🎵','🌸','🦋','🐾','💎','🌙','☀️','🍀','🎈','🦄','😂','👑','🎯','🌊','🦁','🌺'];
+function buildSTK(){
+  const row=document.getElementById('STKR');
+  STKS.forEach(s=>{const b=document.createElement('div');b.textContent=s;b.style.cssText='font-size:1.5rem;cursor:pointer;padding:4px;border-radius:6px;transition:background .2s';b.onclick=()=>addSTK(s);b.onmouseenter=()=>b.style.background='rgba(124,92,252,.2)';b.onmouseleave=()=>b.style.background='';row.appendChild(b);});
+}
+function addSTK(em){
+  if(!G.img){toast('⚠️ تصویری بارگذاری نشده');return;}
+  const el=document.createElement('div'); el.textContent=em; el.className='stk-ov';
+  el.style.cssText='position:absolute;left:40%;top:40%;font-size:2.5rem;cursor:move;user-select:none;z-index:20;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))';
+  CW.appendChild(el); mkDrag(el); G.stks.push({em,el}); toast('استیکر اضافه شد');
+}
+function mkDrag(el){let ox,oy,d=false;el.addEventListener('mousedown',e=>{d=true;const r=CW.getBoundingClientRect();ox=e.clientX-r.left-el.offsetLeft;oy=e.clientY-r.top-el.offsetTop;e.stopPropagation();});document.addEventListener('mousemove',e=>{if(!d)return;const r=CW.getBoundingClientRect();el.style.left=(e.clientX-r.left-ox)+'px';el.style.top=(e.clientY-r.top-oy)+'px';});document.addEventListener('mouseup',()=>d=false);}
+
+// ══════════════════════════════════════════════════════════
+//  UNDO / REDO
+// ══════════════════════════════════════════════════════════
+function pushU(){if(!G.img)return;const s=MC.toDataURL();G.undo.push(s);if(G.undo.length>20)G.undo.shift();G.redo=[];}
+function doUndo(){if(G.undo.length<2){toast('دیگر چیزی برای واگرد نیست');return;}G.redo.push(G.undo.pop());restS(G.undo[G.undo.length-1]);}
+function doRedo(){if(!G.redo.length){toast('دیگر چیزی برای انجام مجدد نیست');return;}const s=G.redo.pop();G.undo.push(s);restS(s);}
+function restS(url){const img=new Image();img.onload=()=>{CTX.clearRect(0,0,MC.width,MC.height);CTX.drawImage(img,0,0);G.img=img;};img.src=url;}
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='z'){e.preventDefault();doUndo();}
+  if((e.ctrlKey||e.metaKey)&&e.key==='y'){e.preventDefault();doRedo();}
+  if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();saveI('png');}
+  if(e.key==='Delete'&&G.selTxt) rmST();
+});
+
+// ══════════════════════════════════════════════════════════
+//  ZOOM
+// ══════════════════════════════════════════════════════════
+function zI(){G.zoom=Math.min(G.zoom*1.25,4);apZ();}
+function zO(){G.zoom=Math.max(G.zoom/1.25,.25);apZ();}
+function zR(){G.zoom=1;apZ();}
+function apZ(){CW.style.transform=`scale(${G.zoom})`;CW.style.transformOrigin='center center';}
+
+// ══════════════════════════════════════════════════════════
+//  RESET
+// ══════════════════════════════════════════════════════════
+function resetImg(){
+  if(!G.img)return;
+  const img=G.img;
+  G.fil='none';G.br=G.co=G.sa=G.bl=G.rot=0;
+  ['sB','sC','sS','sBl','SLR'].forEach(id=>document.getElementById(id).value=0);
+  document.getElementById('vB').textContent=0;document.getElementById('vC').textContent=0;
+  document.getElementById('vS').textContent=0;document.getElementById('vBl').textContent=0;
+  document.getElementById('VRR').textContent='0°';
+  MC.style.filter='none';
+  document.querySelectorAll('.fc').forEach(c=>c.classList.remove('on'));
+  document.querySelector('.fc')?.classList.add('on');
+  clrDC();
+  G.txts.forEach(l=>document.getElementById('te-'+l.id)?.remove());
+  G.stks.forEach(s=>s.el.remove());
+  G.txts=[]; G.stks=[]; refreshTL();
+  CTX.clearRect(0,0,MC.width,MC.height);
+  if(img instanceof HTMLImageElement) CTX.drawImage(img,0,0,MC.width,MC.height);
+  const ri=new Image(); ri.src=MC.toDataURL(); G.img=ri;
+  pushU(); toast('↩️ بازگشت به حالت اولیه');
+}
+
+// ══════════════════════════════════════════════════════════
+//  CLIPBOARD
+// ══════════════════════════════════════════════════════════
+function cpyC(){
+  MC.toBlob(async blob=>{
+    try{await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);toast('✅ کپی شد');}
+    catch{toast('⚠️ کپی در این مرورگر پشتیبانی نمی‌شود');}
+  });
+}
+
+// ══════════════════════════════════════════════════════════
+//  AUTO SAVE (every 30 seconds)
+// ══════════════════════════════════════════════════════════
+setInterval(()=>{
+  if(G.img){
+    try{localStorage.setItem('pc_as', MC.toDataURL());}catch(e){}
+  }
+}, 30000);
+
+function loadAS(){
+  try{
+    const saved=localStorage.getItem('pc_as'); if(!saved)return;
+    const img=new Image();
+    img.onload=()=>{
+      G.img=img; MC.width=img.width; MC.height=img.height;
+      DC.width=img.width; DC.height=img.height;
+      CTX.drawImage(img,0,0); showCW();
+      document.getElementById('finf').textContent='بازیابی خودکار | '+img.width+'×'+img.height+'px';
+      pushU(); toast('📂 پیش‌رفت قبلی بازیابی شد',3000);
+    };
+    img.src=saved;
+  }catch(e){}
+}
+
+// ══════════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════════
+function init(){
+  buildPAL(); buildSTK(); initPX(16); updFP(); loadAS();
+}
+init();
+</script>
+</body>
+</html>
